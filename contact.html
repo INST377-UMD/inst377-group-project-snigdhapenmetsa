@@ -92,19 +92,16 @@
         <div class="form-container">
             <form name="ContactForm" method="POST">
                 <label for="name">Name:</label>
-                <input type="text" id="name" placeholder="Name goes here"><br>
+                <input type="text" id="name" placeholder="Name goes here" required><br>
 
                 <label for="email">Email:</label>
-                <input type="text" id="email" placeholder="Enter email"><br>
+                <input type="text" id="email" placeholder="Enter email" required><br>
 
                 <label for="issue">Issue Description:</label>
-                <textarea id="issue" name="IssueDescription" rows="4" cols="50"></textarea><br>
+                <textarea id="issue" name="IssueDescription" rows="4" cols="50" required></textarea><br>
 
                 <button class="SubButton">Submit</button>
-            </form>
-            <div id="thankYouMessage" style="display: none;">
-                <p>Thank you for contacting us! Your message has been submitted successfully.</p>
-            </div>              
+            </form>             
             <script>
                 const { createClient } = require('@supabase/supabase-js');
 
@@ -119,8 +116,8 @@
                   const email = document.getElementById('email').value;
                   const issueDescription = document.getElementById('issue').value;
               
-                  const { data, error } = await supabase.from('contacts').insert([
-                    { name, email, issue_description: issueDescription },
+                  const { data, error } = await supabase.from('Contacts').insert([
+                    { 'name': name, 'email': email, 'issue_description': issueDescription },
                   ]);
               
                   if (error) {
@@ -132,5 +129,8 @@
                 });
               </script>
         </div>
+        <div id="thankYouMessage" style="display: none;">
+            <p>Thank you for contacting us! Your message has been submitted successfully.</p>
+        </div> 
     </body>
 </html>
