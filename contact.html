@@ -88,9 +88,11 @@
                 <a href="about.html"><li>About</li></a>
             </ul>
         </nav>
-
+        <div id="thankYouMessage" style="display: none;">
+            <p>Thank you for contacting us! Your message has been submitted successfully.</p>
+        </div>
         <div class="form-container">
-            <form name="ContactForm" method="POST">
+            <form name="ContactForm" action="/api/submit-form" method="POST">
                 <label for="name">Name:</label>
                 <input type="text" id="name" placeholder="Name goes here" required><br>
 
@@ -116,21 +118,30 @@
                   const email = document.getElementById('email').value;
                   const issueDescription = document.getElementById('issue').value;
               
-                  const { data, error } = await supabase.from('Contacts').insert([
-                    { 'name': name, 'email': email, 'issue_description': issueDescription },
-                  ]);
-              
-                  if (error) {
-                    console.error('Error inserting data:', error);
-                  } else {
-                    console.log('Data inserted successfully:', data);
-                    document.querySelector('.form-container').style.display = 'none';
-                    document.getElementById('thankYouMessage').style.display = 'block';}
+                  module.exports = async (req, res) => {
+                    console.log(`Submitting Form`);
+
+                    const name = req.body.name;
+                    const email = req.body.email;
+                    const issueDescription = req.body.issueDescription;
+
+                    const { data, error } = await supabase
+                        .from('Contacts')
+                        .insert([
+                            { 'name': name, 'email': email, 'issue_description': issueDescription },
+                        ])
+                        .select();
+
+                    if (error) {
+                        res.status(500).json({ error: 'Internal Server Error' });
+                        console.error('Error inserting data:', error);
+                    } else {
+                        console.log('Data inserted successfully:', data);
+                        res.json({ message: 'Form submitted successfully' });
+                    }
+                };
                 });
               </script>
-        </div>
-        <div id="thankYouMessage" style="display: none;">
-            <p>Thank you for contacting us! Your message has been submitted successfully.</p>
         </div> 
     </body>
 </html>
