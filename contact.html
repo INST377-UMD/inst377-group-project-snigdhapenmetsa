@@ -90,7 +90,7 @@
         </nav>
 
         <div class="form-container">
-            <form name="ContactForm" action="" method="POST">
+            <form name="ContactForm" method="POST">
                 <label for="name">Name:</label>
                 <input type="text" id="name" placeholder="Name goes here"><br>
 
@@ -106,8 +106,8 @@
                 <p>Thank you for contacting us! Your message has been submitted successfully.</p>
             </div>              
             <script>
-                const supabaseClient = require('@supabase/supabase-js')
-                
+                const { createClient } = require('@supabase/supabase-js');
+
                 const supabaseUrl = 'https://cqvibztazwigapisvsld.supabase.co';
                 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxdmlienRhendpZ2FwaXN2c2xkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDMwMzYzNzYsImV4cCI6MjAxODYxMjM3Nn0.pC6h_NstTKOsWiLu4u4VrWq5Lzaw0nHSdPMjIzbxA7c';
                 const supabase = createClient(supabaseUrl, supabaseKey);
@@ -128,7 +128,7 @@
                   } else {
                     console.log('Data inserted successfully:', data);
                     document.querySelector('.form-container').style.display = 'none';
-                    document.getElementById('thankYouMessage').style.display = 'block';                  }
+                    document.getElementById('thankYouMessage').style.display = 'block';}
                 });
               </script>
         </div>
