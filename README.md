@@ -30,6 +30,7 @@ This manual is intended for future developers who wish to maintain or upgrade th
 - Clone the repository from [GitHub link].
 - Install Node.js and npm.
 - Run `npm install` to install dependencies.
+- Install vercel and supabase
 
 ### Running the Application
 

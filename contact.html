@@ -102,6 +102,35 @@
 
                 <button class="SubButton">Submit</button>
             </form>
+            <div id="thankYouMessage" style="display: none;">
+                <p>Thank you for contacting us! Your message has been submitted successfully.</p>
+            </div>              
+            <script>
+                const supabaseClient = require('@supabase/supabase-js')
+                
+                const supabaseUrl = 'https://cqvibztazwigapisvsld.supabase.co';
+                const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxdmlienRhendpZ2FwaXN2c2xkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDMwMzYzNzYsImV4cCI6MjAxODYxMjM3Nn0.pC6h_NstTKOsWiLu4u4VrWq5Lzaw0nHSdPMjIzbxA7c';
+                const supabase = createClient(supabaseUrl, supabaseKey);
+              
+                document.querySelector('form[name="ContactForm"]').addEventListener('submit', async (e) => {
+                  e.preventDefault();
+              
+                  const name = document.getElementById('name').value;
+                  const email = document.getElementById('email').value;
+                  const issueDescription = document.getElementById('issue').value;
+              
+                  const { data, error } = await supabase.from('contacts').insert([
+                    { name, email, issue_description: issueDescription },
+                  ]);
+              
+                  if (error) {
+                    console.error('Error inserting data:', error);
+                  } else {
+                    console.log('Data inserted successfully:', data);
+                    document.querySelector('.form-container').style.display = 'none';
+                    document.getElementById('thankYouMessage').style.display = 'block';                  }
+                });
+              </script>
         </div>
     </body>
 </html>
