@@ -1,0 +1,107 @@
+<html>
+    <style>
+        body {
+            background-color: #fdf6e3;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        #bar {
+            text-align: center;
+            background-color: #ff6f61;
+            color: white;
+            padding: 20px 0;
+        }
+        #main-nav {
+            background-color: #ff6f61;
+            overflow: hidden;
+        }
+        #main-nav ul {
+            padding: 0;
+            list-style-type: none;
+            margin: 0;
+            text-align: center;
+        }
+        #main-nav ul li {
+            display: inline-block;
+            padding: 10px 20px;
+        }
+        #main-nav a {
+            text-decoration: none;
+            color: white;
+        }
+        #main-nav ul li:hover {
+            background-color: #ff9560;
+        }
+        .SubButton {
+            display: block;
+            width: auto;
+            padding: 12px 24px;
+            margin: 10px auto;
+            background-color: #4db6ac;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        }
+        .SubButton:hover {
+            background-color: #339989;
+        }
+        .SubButton:active {
+            background-color: #2b7a78;
+        }
+        label[for="name"], label[for="email"], label[for="issue"] {
+            display: block;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        input[type="text"], textarea {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        textarea {
+            resize: vertical;
+        }
+        .form-container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+
+    <body>
+        <header id="bar">
+            <h1>Contact Page</h1>
+        </header>
+    
+        <nav id="main-nav">
+            <ul>
+                <a href="index.html"><li>Dictionary</li></a>
+                <a href="about.html"><li>About</li></a>
+            </ul>
+        </nav>
+
+        <div class="form-container">
+            <form name="ContactForm" action="" method="POST">
+                <label for="name">Name:</label>
+                <input type="text" id="name" placeholder="Name goes here"><br>
+
+                <label for="email">Email:</label>
+                <input type="text" id="email" placeholder="Enter email"><br>
+
+                <label for="issue">Issue Description:</label>
+                <textarea id="issue" name="IssueDescription" rows="4" cols="50"></textarea><br>
+
+                <button class="SubButton">Submit</button>
+            </form>
+        </div>
+    </body>
+</html>
