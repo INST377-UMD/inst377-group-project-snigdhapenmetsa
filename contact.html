@@ -88,9 +88,6 @@
                 <a href="about.html"><li>About</li></a>
             </ul>
         </nav>
-        <div id="thankYouMessage" style="display: none;">
-            <p>Thank you for contacting us! Your message has been submitted successfully.</p>
-        </div>
         <div class="form-container">
             <form name="ContactForm" onsubmit="addContact()">
                 <label for="name">Name:</label>
@@ -103,44 +100,62 @@
                 <textarea id="issue" name="IssueDescription" rows="4" cols="50" required></textarea><br>
 
                 <button class="SubButton">Submit</button>
-            </form>             
+            </form>  
+            <div id="thankYouMessage" style="display: none;">
+                <p>Thank you for contacting us! Your message has been submitted successfully.</p>
+            </div>           
             <script>
-                const { createClient } = require('@supabase/supabase-js');
-
                 const supabaseUrl = 'https://cqvibztazwigapisvsld.supabase.co';
                 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxdmlienRhendpZ2FwaXN2c2xkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDMwMzYzNzYsImV4cCI6MjAxODYxMjM3Nn0.pC6h_NstTKOsWiLu4u4VrWq5Lzaw0nHSdPMjIzbxA7c';
                 const supabase = createClient(supabaseUrl, supabaseKey);
               
-                document.querySelector('form[name="ContactForm"]').addEventListener('submit', async (e) => {
-                  e.preventDefault();
-              
-                  const name = document.getElementById('name').value;
-                  const email = document.getElementById('email').value;
-                  const issueDescription = document.getElementById('issue').value;
-              
-                  async function addContact() {
-                    console.log(`Submitting Form`);
+                async function addContact() {
+                        console.log('Creating Contact');
 
-                    const name = req.body.name;
-                    const email = req.body.email;
-                    const issueDescription = req.body.issueDescription;
+                        const name = document.getElementById("name").value;
+                        const email = document.getElementById("email").value;
+                        const issueDescription = document.getElementById("issue").value;
 
-                    const { data, error } = await supabase
-                        .from('Contacts')
-                        .insert([
-                            { 'name': name, 'email': email, 'issue_description': issueDescription },
-                        ])
-                        .select();
+                        try {
+                            const response = await fetch('/api/submit-form', {
+                                method: 'POST',
+                                body: JSON.stringify({
+                                    "name": name,
+                                    "email": email,
+                                    "issue_description": issueDescription
+                                }),
+                                headers: {
+                                    "Content-type": "application/json; charset=UTF-8"
+                                }
+                            });
 
-                    if (error) {
-                        res.status(500).json({ error: 'Internal Server Error' });
-                        console.error('Error inserting data:', error);
-                    } else {
-                        console.log('Data inserted successfully:', data);
-                        res.json({ message: 'Form submitted successfully' });
-                    }
-                };
-                });
+                            if (response.status === 200) {
+                                console.log('Data submitted successfully');
+                                document.querySelector('form[name="ContactForm"]').style.display = 'none';
+                                document.getElementById('thankYouMessage').style.display = 'block';
+                            } else {
+                                throw new Error(await response.json());
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+
+                            var div = document.createElement('div');
+                            div.setAttribute('class', 'errorBox');
+                            div.setAttribute('id', 'errorBox');
+
+                            var h1 = document.createElement('h1');
+                            h1.innerHTML = `Error Occurred:`;
+
+                            var p = document.createElement('p');
+                            p.innerHTML = `${error.message}`;
+
+                            div.appendChild(h1);
+                            div.appendChild(p);
+                            document.body.appendChild(div);
+                        }
+
+                        await loadCustomerData();
+                    };
               </script>
         </div> 
     </body>
